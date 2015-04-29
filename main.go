@@ -18,11 +18,12 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/russross/blackfriday"
 	"io/ioutil"
 	"os"
 	"runtime/pprof"
 	"strings"
+
+	"github.com/russross/blackfriday"
 )
 
 const DEFAULT_TITLE = ""
@@ -151,7 +152,9 @@ func main() {
 		if toc {
 			htmlFlags |= blackfriday.HTML_TOC
 		}
-		renderer = blackfriday.HtmlRenderer(htmlFlags, title, css)
+		// renderer = blackfriday.HtmlRenderer(htmlFlags, title, css)
+		renderer = HtmlMoreRenderer(htmlFlags, title, css)
+
 	}
 
 	// parse and render

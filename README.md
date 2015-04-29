@@ -8,8 +8,85 @@ lives on github, where you can find more information about it:
 
 Blackfriday-tool is an example command-line tool that uses
 blackfriday to process markdown input. It provides a complete
-example of how to use blackfriday in a Go project.
+example `of` how to use blackfriday in a Go project.
 
+
+~~~{.python hl_lines="1 3"}
+python code
+~~~
+
+```python hl_lines="1 3"
+fdfdsfs
+```
+
+
+```go
+more code here
+```
+
+```uml
+@startuml
+autonumber
+
+actor Client
+
+== Startup ==
+AuthLogin -> AuthLogin: Startup
+GateGame -> GateGame: Startup
+
+== Register Gates ==
+loop every 10 seconds
+GateGame -> AuthLogin: Register IP, CCU
+end
+
+
+== Auth ==
+group 新用户注册，匿名用户绑定注册
+Client -> AuthLogin: Register(deviceid, username, passwd)
+activate AuthLogin
+AuthLogin -> AuthLogin: AuthTokenNotify(Authtoken, UserID)
+Client <-- AuthLogin: registered with AuthToken
+deactivate AuthLogin
+end
+
+group 普通登录过程
+Client -> AuthLogin: GetAuthtoken(deviceid) or Auth(username, passwd)
+activate AuthLogin
+AuthLogin -> AuthLogin: AuthTokenNotify(Authtoken, UserID)
+Client <-- AuthLogin: Authtoken
+deactivate AuthLogin
+end
+
+
+== Login ==
+Client -> AuthLogin: GetShards(Gameid)
+activate AuthLogin
+Client <-- AuthLogin: shardsname, shardsids
+deactivate AuthLogin
+
+
+Client -> AuthLogin: Client choose which shard to play, GetGateIP(shardid, Authtoken)
+activate AuthLogin
+
+AuthLogin -> GateGame: jsonRPC gate ID (LoginToken, UserID, GameID, shardID)
+Client <-- AuthLogin: IP of Gate, Logintoken
+deactivate AuthLogin
+
+== Connect ==
+Client -> GateGame: Connect
+Client <-- GateGame: Accept
+
+Client -> GateGame: handshake(Logintoken)
+Client <-- GateGame: handshake ok (AccountID)
+
+... 游戏正常请求开始 ...
+loop n times
+Client -> GateGame: Request
+GateGame -> Client: Response
+end
+
+@enduml
+```
 Here is the help message for the tool:
 
     Blackfriday Markdown Processor v1.1
